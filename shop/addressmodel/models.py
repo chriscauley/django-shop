@@ -34,9 +34,9 @@ class Country(models.Model):
 
 
 class Address(models.Model):
-    user_shipping = models.OneToOneField(USER_MODEL, related_name='shipping_address',
+    user_shipping = models.OneToOneField(USER_MODEL, related_name='+',
                                          blank=True, null=True)
-    user_billing = models.OneToOneField(USER_MODEL, related_name='billing_address',
+    user_billing = models.OneToOneField(USER_MODEL, related_name='+',
                                         blank=True, null=True)
 
     name = models.CharField(_('Name'), max_length=255)

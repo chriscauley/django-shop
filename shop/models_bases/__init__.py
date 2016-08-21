@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models.aggregates import Sum
 from django.utils.translation import ugettext_lazy as _
-from polymorphic.polymorphic_model import PolymorphicModel
+from polymorphic.models import PolymorphicModel
 from shop.cart.modifiers_pool import cart_modifiers_pool
 from shop.util.fields import CurrencyField
 from shop.util.loader import get_model_string
@@ -80,7 +80,7 @@ class BaseCart(models.Model):
     people buy from our shop without having to register with us.
     """
     # If the user is null, that means this is used for a session
-    user = models.OneToOneField(USER_MODEL, null=True, blank=True)
+    user = models.OneToOneField(USER_MODEL, null=True, blank=True,related_name="+")
     date_created = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
 
@@ -350,7 +350,7 @@ class BaseOrder(models.Model):
 
     # If the user is null, the order was created with a session
     user = models.ForeignKey(USER_MODEL, blank=True, null=True,
-            verbose_name=_('User'))
+                             verbose_name=_('User'),related_name="+")
     status = models.IntegerField(choices=STATUS_CODES, default=PROCESSING,
             verbose_name=_('Status'))
     order_subtotal = CurrencyField(verbose_name=_('Order subtotal'))
